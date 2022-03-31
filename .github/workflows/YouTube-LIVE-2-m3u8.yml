@@ -1,0 +1,75 @@
+name: Generate YouTube LIVE m3u8
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    # if: ${{ github.repository_owner == 'shensven' }}
+    if: ${{ false }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install youtube-dl
+        run: |
+          sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
+          sudo chmod a+rx /usr/local/bin/youtube-dl
+
+      - name: generate setliveNews.m3u8
+        run: |
+          touch YouTube-LIVE/setliveNews.m3u8
+          sudo cat >./YouTube-LIVE/setliveNews.m3u8<<EOL
+          #EXTM3U
+          #EXT-X-VERSION:3
+          #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=2560000
+          $(youtube-dl -g 'https://www.youtube.com/watch?v=FoBfXvlOR6I')
+          EOL
+
+      - name: generate EBCNews.m3u8
+        run: |
+          touch YouTube-LIVE/EBCNews.m3u8
+          sudo cat >./YouTube-LIVE/EBCNews.m3u8<<EOL
+          #EXTM3U
+          #EXT-X-VERSION:3
+          #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=2560000
+          $(youtube-dl -g 'https://www.youtube.com/watch?v=R2iMq5LKXco')
+          EOL
+
+      - name: generate ctiNews.m3u8
+        run: |
+          touch YouTube-LIVE/ctiNews.m3u8
+          sudo cat >./YouTube-LIVE/ctiNews.m3u8<<EOL
+          #EXTM3U
+          #EXT-X-VERSION:3
+          #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=2560000
+          $(youtube-dl -g 'https://www.youtube.com/watch?v=lu_BJKxqGnk')
+          EOL
+
+      - name: generate formosaNews.m3u8
+        run: |
+          touch YouTube-LIVE/formosaNews.m3u8
+          sudo cat >./YouTube-LIVE/formosaNews.m3u8<<EOL
+          #EXTM3U
+          #EXT-X-VERSION:3
+          #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=2560000
+          $(youtube-dl -g 'https://www.youtube.com/watch?v=XGEmg3vhrzU')
+          EOL
+
+      - name: generate Arirang.m3u8
+        run: |
+          touch YouTube-LIVE/Arirang.m3u8
+          sudo cat >./YouTube-LIVE/Arirang.m3u8<<EOL
+          #EXTM3U
+          #EXT-X-VERSION:3
+          #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=2560000
+          $(youtube-dl -g 'https://www.youtube.com/watch?v=kTSbZym4uLw')
+          EOL
+
+      # - name: git push
+      #   run: |
+      #     git config --local user.name "yn-iptv-bot"
+      #     git config --local user.email "yn-iptv-bot@shensven.com"
+      #     git add .
+      #     git commit --amend --no-edit
+      #     git push --force
